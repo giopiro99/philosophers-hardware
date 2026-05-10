@@ -1,9 +1,0 @@
-{
-    "idf.currentSetup": "/home/giopiro/.espressif/v6.0/esp-idf",
-    "idf.port": "/dev/ttyUSB0",
-    "idf.customExtraVars": {
-        "IDF_TARGET": "esp32"
-    },
-    "idf.flashType": "JTAG",
-    "C_Cpp.errorSquiggles": "enabled"
-}
