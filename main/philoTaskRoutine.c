@@ -17,7 +17,7 @@ static inline void    eatRoutine(t_philo *philo, SemaphoreHandle_t first_fork, S
     xQueueSend(led_queue, &msg, 0);
     philo->eat_count++;
     //bilanciamento delle mangiate, in futuro creero' una sorta di scheduler per evitare di rallentare i task
-    vTaskDelay(pdMS_TO_TICKS(TIME_TO_EAT + (philo->eat_count * 10)));
+    vTaskDelay(pdMS_TO_TICKS(TIME_TO_EAT + (philo->eat_count)));
     xSemaphoreGive(first_fork);
     xSemaphoreGive(second_fork);
     ESP_LOGI(DEBUG_TAG, "philo number %d has eated n=%d", philo->id, philo->eat_count);
