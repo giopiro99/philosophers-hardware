@@ -7,7 +7,7 @@ void    vTaskLedManager(void *params){
     int pins[] = {13, 12, 14, 27, 26};
 
     for (int i = 0; i < PHILO_NUMBER; i++){
-        
+
         if (gpio_reset_pin(pins[i]) != ESP_OK)
         {
             ESP_LOGE(ERROR_TAG, "Error in gpio_reset_pin");

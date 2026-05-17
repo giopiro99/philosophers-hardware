@@ -16,7 +16,8 @@ static inline void    eatRoutine(t_philo *philo, SemaphoreHandle_t first_fork, S
     t_led_msg msg = {.philoId = philo->id, .status = 1};
     xQueueSend(led_queue, &msg, 0);
     philo->eat_count++;
-    vTaskDelay(pdMS_TO_TICKS(TIME_TO_EAT + (philo->eat_count * 0.1)));
+    //bilanciamento delle mangiate, in futuro creero' una sorta di scheduler per evitare di rallentare i task
+    vTaskDelay(pdMS_TO_TICKS(TIME_TO_EAT + (philo->eat_count * 10)));
     xSemaphoreGive(first_fork);
     xSemaphoreGive(second_fork);
     ESP_LOGI(DEBUG_TAG, "philo number %d has eated n=%d", philo->id, philo->eat_count);
@@ -32,6 +33,18 @@ static inline void    thinkRoutine(t_philo *philo){
     ESP_LOGI(DEBUG_TAG, "philo number %d is thinking", philo->id);
 }
 
+
+static inline void restartRoutine(t_philo *philo){
+    philo->eat_count = 0;
+    if ((xSemaphoreTake(philos_restarted_mutex, pdMS_TO_TICKS(100)) == pdTRUE)){
+        philos_restarted++;
+        xSemaphoreGive(philos_restarted_mutex);
+        while(have_to_restart){
+            vTaskDelay(pdMS_TO_TICKS(10));
+        }
+    }
+}
+
 void    vTaskRoutine(void *params){
     t_philo *philo = (t_philo *)params;
     SemaphoreHandle_t first_fork;
@@ -43,6 +56,10 @@ void    vTaskRoutine(void *params){
         if (!is_running){
             vTaskDelay(pdMS_TO_TICKS(100));
             continue;
+        }
+        
+        if (have_to_restart){
+            restartRoutine(philo);
         }
 
         if (xSemaphoreTake(first_fork, pdMS_TO_TICKS(500)) == pdTRUE){
@@ -57,6 +74,5 @@ void    vTaskRoutine(void *params){
         else{
             thinkRoutine(philo);
         }
-        vTaskDelay(pdMS_TO_TICKS(1));
     }
 }

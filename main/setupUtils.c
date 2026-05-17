@@ -13,7 +13,7 @@ static inline void  createForks(SemaphoreHandle_t *forks){
     }
 }
 
-static inline void  initPhilos(t_philo *philos, SemaphoreHandle_t *forks){
+static inline void  initPhilosValues(t_philo *philos, SemaphoreHandle_t *forks){
     for (int i = 0; i < PHILO_NUMBER; i++){
         philos[i].id = i;
         philos[i].eat_count = 0;
@@ -26,5 +26,5 @@ static inline void  initPhilos(t_philo *philos, SemaphoreHandle_t *forks){
 
 void  setup(t_philo *philos, SemaphoreHandle_t *forks){
     createForks(forks);
-    initPhilos(philos, forks);
+    initPhilosValues(philos, forks);
 }
