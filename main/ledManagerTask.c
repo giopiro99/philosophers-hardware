@@ -21,7 +21,7 @@ void    vTaskLedManager(void *params){
     while (1){
         if(xQueueReceive(led_queue, &recived, portMAX_DELAY) == pdTRUE){
             gpio_set_level(pins[recived.philoId], recived.status);
-            ESP_LOGI(DEBUG_TAG, "Filosofo %d -> Pin %d -> Stato %d", 
+            ESP_LOGI(LED_TAG, "Filosofo %d -> Pin %d -> Stato %d", 
                 recived.philoId, pins[recived.philoId], recived.status);
         }
     }

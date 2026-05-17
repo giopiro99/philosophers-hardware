@@ -30,7 +30,6 @@ static const char *DEBUG_TAG="DEBUG";
 static const char *COMMUNICATION_TAG="COMMUNICATION";
 static const char *BUTTON_TAG="BUTTON";
 
-
 #define PHILO_NUMBER 5
 #define TIME_TO_EAT 100
 #define TIME_TO_THINK 100
