@@ -1,3 +1,6 @@
+
+https://github.com/user-attachments/assets/06798320-0ace-44a3-b9b5-ea68bbd8b4b0
+https://github.com/user-attachments/assets/7a270188-a719-49b3-ab6f-369fab823dff
 Progetto: Problema dei Filosofi a Cena (ESP32 / FreeRTOS)
 Descrizione
 
