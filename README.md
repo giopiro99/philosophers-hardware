@@ -1,5 +1,5 @@
-<video src="https://github.com/user-attachments/assets/06798320-0ace-44a3-b9b5-ea68bbd8b4b0" width="100%" controls></video>
-<video src="https://github.com/user-attachments/assets/7a270188-a719-49b3-ab6f-369fab823dff" width="100%" controls></video>
+<video src="https://github.com/user-attachments/assets/c2ed1f97-16b9-4444-9d1a-c141c857b216" width="100%" controls></video>
+<video src="https://github.com/user-attachments/assets/edbcb21a-7bd8-44e8-af25-64642895c919" width="100%" controls></video>
 
 Progetto: Problema dei Filosofi a Cena (ESP32 / FreeRTOS)
 Descrizione
