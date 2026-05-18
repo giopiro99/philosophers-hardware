@@ -1,23 +1,14 @@
-# Cartella di compilazione principale (FONDAMENTALE)
 build/
-
-# File di backup generati da menuconfig
 sdkconfig.old
-
-# Artefatti di compilazione C/C++ generici
 *.o
 *.obj
 *.d
 *.elf
 *.bin
 *.map
-
-# Cache dei file Python (ESP-IDF usa molti script Python in background)
 __pycache__/
 *.pyc
 *.pyo
-
-# Configurazioni degli IDE più comuni (opzionale ma consigliato)
 .vscode/
 .idea/
 *.swp
