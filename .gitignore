@@ -1,4 +1,5 @@
 build/
+.cache
 sdkconfig.old
 *.o
 *.obj

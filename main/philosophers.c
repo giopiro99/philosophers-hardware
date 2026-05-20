@@ -1,15 +1,20 @@
-#include "philoLibrary.h"
-
+#include "app_types.h"
+#include "app_config.h"
+#include "communication_manager.h"
+#include "led_manager.h"
+#include "philo_task.h"
+#include "button_manager.h"
+#include "setup.h"
 //Inizializzazione delle variabili "globali",
 //led_queue utilizzata per cominicare tra i task e far capire al vTaskLedManager quale pin attivare e disattivare
 //is_running verra' utilizzata sia per intercettare "l'evento" QT per stoppare la simulazione sia per il bottone fisico montato sulla breadboard gestito da un interrupt
 //have_to_restart verra' utilizzata per "l'evento" QT che avra' come messaggio 'R' per resettare i valori della simulazione
-
 QueueHandle_t                       led_queue = NULL;
 volatile bool                       have_to_restart = false;
 SemaphoreHandle_t                   restart_sync_semaphore = NULL;
 SemaphoreHandle_t                   go_sync_semaphore = NULL;
 SemaphoreHandle_t                   button_semaphore = NULL;
+EventGroupHandle_t                  system_events = NULL;
 
 //CREATE PHILOS TASKS UTILS
 static void initPhilosTasks(t_philo *philo){

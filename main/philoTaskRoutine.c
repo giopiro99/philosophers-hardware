@@ -1,4 +1,4 @@
-#include "philoLibrary.h"
+#include "philo_task.h"
 
 static inline void    setForks(t_philo *philo, SemaphoreHandle_t *first_fork, SemaphoreHandle_t *second_fork){
     if (philo->id % 2 == 0){

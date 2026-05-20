@@ -1,4 +1,4 @@
-#include "philoLibrary.h"
+#include "communication_manager.h"
 
 void vTaskCommunicationManager(void *params){
 	uint8_t ch = 0;

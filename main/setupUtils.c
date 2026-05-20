@@ -1,4 +1,4 @@
-#include "philoLibrary.h"
+#include "setup.h"
 
 static inline void  createForks(SemaphoreHandle_t *forks){
     for (int i = 0; i < PHILO_NUMBER; i++){

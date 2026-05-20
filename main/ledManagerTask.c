@@ -1,4 +1,4 @@
-#include "philoLibrary.h"
+#include "led_manager.h"
 
 void    vTaskLedManager(void *params){
 
@@ -10,11 +10,11 @@ void    vTaskLedManager(void *params){
 
         if (gpio_reset_pin(pins[i]) != ESP_OK)
         {
-            ESP_LOGE(ERROR_TAG, "Error in gpio_reset_pin");
+            ESP_LOGE(LED_TAG, "Error in gpio_reset_pin");
             esp_restart();
         }
         if (gpio_set_direction(pins[i], GPIO_MODE_OUTPUT) != ESP_OK){
-            ESP_LOGE(ERROR_TAG, "Error in gpio_set_direction");
+            ESP_LOGE(LED_TAG, "Error in gpio_set_direction");
             esp_restart();
         }
     }

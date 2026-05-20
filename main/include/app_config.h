@@ -1,0 +1,17 @@
+#ifndef APP_CONFIG_H
+# define APP_CONFIG_H
+
+#define PHILO_NUMBER 5
+#define TIME_TO_EAT 100
+#define TIME_TO_THINK 100
+#define RUNNING_BIT (1 << 0)
+#define BUTTON_PIN GPIO_NUM_25
+#define PHILO_TAG "PHILO"
+#define LED_TAG "LED"
+#define ERROR_TAG "ERROR"
+#define SUCCESS_TAG "SUCCESS"
+#define DEBUG_TAG "DEBUG"
+#define COMMUNICATION_TAG "COMMUNICATION"
+#define BUTTON_TAG "BUTTON"
+
+#endif
