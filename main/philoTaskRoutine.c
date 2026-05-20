@@ -36,13 +36,9 @@ static inline void    thinkRoutine(t_philo *philo){
 
 static inline void restartRoutine(t_philo *philo){
     philo->eat_count = 0;
-    if ((xSemaphoreTake(philos_restarted_mutex, pdMS_TO_TICKS(100)) == pdTRUE)){
-        philos_restarted++;
-        xSemaphoreGive(philos_restarted_mutex);
-        while(have_to_restart){
-            vTaskDelay(pdMS_TO_TICKS(10));
-        }
-    }
+    xSemaphoreGive(restart_sync_semaphore);
+    if (xSemaphoreTake(go_sync_semaphore, portMAX_DELAY))
+        return ;
 }
 
 void    vTaskRoutine(void *params){
@@ -53,13 +49,17 @@ void    vTaskRoutine(void *params){
     setForks(philo, &first_fork, &second_fork);
 
     while (1){
-        if (!is_running){
-            vTaskDelay(pdMS_TO_TICKS(100));
-            continue;
-        }
-        
+        xEventGroupWaitBits(
+            system_events,
+            RUNNING_BIT,
+            pdFALSE,
+            pdFALSE,
+            portMAX_DELAY
+        );
+
         if (have_to_restart){
             restartRoutine(philo);
+            continue;
         }
 
         if (xSemaphoreTake(first_fork, pdMS_TO_TICKS(500)) == pdTRUE){

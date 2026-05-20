@@ -8,25 +8,30 @@ void vTaskCommunicationManager(void *params){
 	    int rxBytes = uart_read_bytes(UART_NUM_0, &ch, 1, pdMS_TO_TICKS(20));
 	    if (rxBytes > 0)
 	    {
-			if (is_running){
-				if (ch == 'S'){
-					is_running = false;
-					ESP_LOGI(COMMUNICATION_TAG, "Sessione stoppata via COMUNICAZIONE");
-				}
-				else if (ch == 'R'){
-					have_to_restart = true;
-					while(philos_restarted < PHILO_NUMBER){
-						vTaskDelay(pdMS_TO_TICKS(25));
-					}
-
-					philos_restarted = 0;
-					have_to_restart = false;
-					ESP_LOGI(COMMUNICATION_TAG, "Sessione restartata con successo via COMUNICAZIONE");
-				}
+			if (ch == 'S'){
+				xEventGroupClearBits(system_events, RUNNING_BIT);
+				ESP_LOGI(COMMUNICATION_TAG, "Sessione stoppata via COMUNICAZIONE");
 			}
-			else if (!is_running && ch == 'G'){
-				is_running = true;
+			else if (ch == 'G'){
+				xEventGroupSetBits(system_events, RUNNING_BIT);
 				ESP_LOGI(COMMUNICATION_TAG, "Sessione attivata via COMUNICAZIONE");
+			}
+			else if (ch == 'R'){
+				have_to_restart = true;
+				EventBits_t bits_value = xEventGroupGetBits(system_events);
+				if ((bits_value & RUNNING_BIT) == 0)
+					xEventGroupSetBits(system_events, RUNNING_BIT);
+				
+				for (int i = 0; i < PHILO_NUMBER; i++){
+					xSemaphoreTake(restart_sync_semaphore, portMAX_DELAY);
+				}
+
+				have_to_restart = false;
+				xEventGroupClearBits(system_events, RUNNING_BIT);
+
+				for (int i = 0; i < PHILO_NUMBER; i++){
+					xSemaphoreGive(go_sync_semaphore);
+				}
 			}
 
 			uart_flush(UART_NUM_0);

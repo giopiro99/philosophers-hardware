@@ -11,16 +11,17 @@
 #include "freertos/task.h"    
 #include "freertos/queue.h"   
 #include "freertos/semphr.h"
+#include "freertos/event_groups.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 extern QueueHandle_t                    led_queue;
-extern volatile bool                    is_running;
 extern volatile bool                    have_to_restart;
-extern volatile int                     philos_restarted;
-extern volatile SemaphoreHandle_t       philos_restarted_mutex;
+extern SemaphoreHandle_t                restart_sync_semaphore;
+extern SemaphoreHandle_t                go_sync_semaphore;
 extern SemaphoreHandle_t                button_semaphore;
+extern EventGroupHandle_t               system_events;
 
 static const char *PHILO_TAG="PHILO";
 static const char *LED_TAG="LED";
@@ -33,8 +34,9 @@ static const char *BUTTON_TAG="BUTTON";
 #define PHILO_NUMBER 5
 #define TIME_TO_EAT 100
 #define TIME_TO_THINK 100
-
+#define RUNNING_BIT (1 << 0)
 #define BUTTON_PIN GPIO_NUM_25
+
 typedef struct s_philo
 {
     int id;

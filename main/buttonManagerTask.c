@@ -20,11 +20,13 @@ void    vTaskButtonManager(void *params){
     {
         //il task dorme finche' non viene rilasciato il semaforo dall INTERRUPT
         if (xSemaphoreTake(button_semaphore, portMAX_DELAY) == pdTRUE){
-            is_running = !is_running;
-            if(is_running) {
+            EventBits_t bit_value = xEventGroupGetBits(system_events);
+            if((bit_value & RUNNING_BIT) == 0) {
+                xEventGroupSetBits(system_events, RUNNING_BIT);
                 ESP_LOGI(BUTTON_TAG, "Bottone premuto: SIMULAZIONE RIPARTITA");
             }
             else{
+                xEventGroupClearBits(system_events, RUNNING_BIT);
                 ESP_LOGI(BUTTON_TAG, "Bottone premuto: SIMULAZIONE FERMATA");
             }
         }
